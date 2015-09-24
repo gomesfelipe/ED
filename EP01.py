@@ -25,16 +25,21 @@ def mergesort(v):
         return merge(e, d)
 
 def quicksort(lista):
-    if len(lista) <= 1:
-        return lista
+    ini2 = time.time()
     pivô = lista[0]
     iguais  = [x for x in lista if x == pivô]
     menores = [x for x in lista if x <  pivô]
     maiores = [x for x in lista if x >  pivô]
+    if len(lista) <= 1:
+        return lista
     #tudo = quicksort(menores) + iguais + quicksort(maiores)
-    return menores+iguais+maiores
+    lista=[menores+iguais+maiores]
+    fim2 = time.time()
+    quick=fim2-ini2
+    return quick
 
 def insercao(lista):
+    ini4=time.time()
     for j in range(1,len(lista)):
         c = lista[j]
         i = j - 1
@@ -42,15 +47,22 @@ def insercao(lista):
             lista[i + 1] = lista[i]
             i -= 1
         lista[i + 1] = c
+    fim4=time.time()
+    inser=fim4-ini4
+    return inser
 
 def selecao(lista):
-  n = len(lista)
-  for i in range(n-1):
-    x = i
-    for j in range(i+1,n):
-      if lista[j] < lista[x]: x = j
-      lista[i],lista[x] = lista[x],lista[i]
-
+    ini3=time.time()
+    n = len(lista)
+    for i in range(n-1):
+        x = i
+        for j in range(i+1,n):
+          if lista[j] < lista[x]:
+              x = j
+              lista[i],lista[x] = lista[x],lista[i]
+    fim3=time.time()
+    selec=fim3-ini3
+    return selec
 
 def main():
     n=2000
@@ -59,36 +71,30 @@ def main():
     lista=[]
 
     while x <= ciclo:
-        for i in range(n):
-            i=random.randrange(1, 2000, 1)
-            lista.append(i)
-        exec1(lista)
-        x,n = x+1, n+2000
         print(n)
-        
+        for i in range(n):
+            i=random.randrange(20000)
+            lista.append(i)
+            lista.sort()
 
-def exec1(lista):
-    ini3=time.time()
-    selecao(lista)
-    fim3=time.time()
-    selec=fim3-ini3
-
-    ini4=time.time()
-    insercao(lista)
-    fim4=time.time()
-    inser=fim4-ini4
-    
-    ini1 = time.time()
-    mergesort(lista)
-    fim1 = time.time()
-    merge=fim1-ini1
-    
-    ini2 = time.time()
-    quicksort(lista)
-    fim2 = time.time()
-    quick=fim2-ini2
+        ini1 = time.time()
+        mergesort(lista)
+        fim1 = time.time()
+        merge=fim1-ini1
         
-    print ("Função insercao:  ", inser)
-    print ("Função mergesort: ", merge)
-    print ("Função quicksort: ", quick)
-    print ("Função selecao:  ", selec)
+        print ("Função insercao:  ", insercao(lista))
+        print ("Função mergesort: ", merge)
+        print ("Função quicksort: ", quicksort(lista))
+        print ("Função selecao:   ", selecao(lista))
+        x,n = x+1, n+2000        
+
+
+    tabela =(
+        "|------------------------[EP1 - Vale a pena ordenar?]------------------------- |\n"
+        "|  Aluno(s): FELIPE GOMES - FATEC - SJC                                        |\n"
+        "|  Estrutura de Dados - ADS                                                    |\n"
+        "|  Algoritmo(s) escolhido(s): todos                                            |\n"
+        "|             Tempos de Ordenacao                   Numero de Buscas           |\n"          
+        "|------------------------------------------------------------------------------|\n"
+        "|   n   | Insercao  Selecao  Merge. Quick. | Insercao  Selecao  Merge.  Quick. |\n"
+        "|-------|----------------------------------------------------------------------|\n")
